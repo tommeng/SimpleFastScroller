@@ -47,10 +47,10 @@ A fast scroller for RecyclerView.
     }
 ```
 
-##SimpleFastScrollCalculator
-A couple operations may need the RecyclerView's LayoutManager to compute. Since you may use a custom layout manager, you may need to create a custom SimpleFastScrollCalculator to calculate scroll percentage and how many items are visible along the scroll axis.
+##FastScrollCalculator
+A couple operations may need the RecyclerView's LayoutManager to compute. Since you may use a custom layout manager, you may need to create a custom FastScrollCalculator to calculate scroll percentage and how many items are visible along the scroll axis.
 
-For LinearLayoutManager, LlmSimpleFastScrollCalculator has been provided.
+For LinearLayoutManager, LlmFastScrollCalculator has been provided.
 
 ```
 /**
