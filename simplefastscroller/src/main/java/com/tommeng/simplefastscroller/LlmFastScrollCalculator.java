@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 /**
  * A fast scroll calculator for {@link android.support.v7.widget.LinearLayoutManager}
  */
-public class LlmScrollPercentCalculator implements SimpleFastScroller.FastScrollCalculator {
+public class LlmFastScrollCalculator implements SimpleFastScroller.FastScrollCalculator {
     @Override
     public float getScrollPercentage(RecyclerView recyclerView) {
         if (recyclerView == null) return 0;
