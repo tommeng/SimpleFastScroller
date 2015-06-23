@@ -2,6 +2,10 @@
 
 A fast scroller for RecyclerView.
 
+![Image of SimpleFastScroller](https://tommeng.com/simplefastscroller/1.png)
+<br>
+![Image of SimpleFastScroller](https://tommeng.com/simplefastscroller/2.png)
+
 ##Set up
 ###Set up example (xml):
 ```
