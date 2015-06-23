@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleFastScroller">
+        <attr name="sfs_thumb_inactive" format="color"/>
+        <attr name="sfs_thumb_active" format="color"/>
+        <attr name="sfs_track" format="color"/>
+    </declare-styleable>
+</resources>
