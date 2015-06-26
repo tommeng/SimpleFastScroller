@@ -1,6 +1,7 @@
 package com.tommeng.simplefastscroller;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -46,16 +47,16 @@ public class SimpleFastScroller extends FrameLayout {
         if (!isInEditMode()) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.SimpleFastScroller);
             try {
-                thumbInactiveColor = array.getColor(R.styleable.SimpleFastScroller_sfs_thumb_inactive, android.R.color.darker_gray);
-                thumbActiveColor = array.getColor(R.styleable.SimpleFastScroller_sfs_thumb_active, android.R.color.holo_blue_bright);
-                trackBackgroundRes = array.getColor(R.styleable.SimpleFastScroller_sfs_track, android.R.color.background_light);
+                thumbInactiveColor = array.getColor(R.styleable.SimpleFastScroller_sfs_thumb_inactive, getResources().getColor(android.R.color.darker_gray));
+                thumbActiveColor = array.getColor(R.styleable.SimpleFastScroller_sfs_thumb_active, getResources().getColor(android.R.color.holo_blue_bright));
+                trackBackgroundRes = array.getColor(R.styleable.SimpleFastScroller_sfs_track, getResources().getColor(android.R.color.transparent));
             } finally {
                 array.recycle();
             }
         }
 
-        thumb.setBackgroundResource(thumbInactiveColor);
-        track.setBackgroundResource(trackBackgroundRes);
+        thumb.setBackgroundColor(thumbInactiveColor);
+        track.setBackgroundColor(trackBackgroundRes);
 
         removeAllViews();
         addView(track);
@@ -76,11 +77,13 @@ public class SimpleFastScroller extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (fastScrollCalculator == null || recyclerView == null || recyclerView.getAdapter() == null)
+        if (fastScrollCalculator == null || recyclerView == null || recyclerView.getAdapter() == null || recyclerView.getAdapter().getItemCount() <= 0)
             return;
         float itemsVisible = fastScrollCalculator.getItemsVisible(recyclerView);
         float totalItems = recyclerView.getAdapter().getItemCount();
-        thumb.getLayoutParams().height = (int) (getMeasuredHeight() * (itemsVisible / totalItems));
+        int suggestedHeight = (int) (getMeasuredHeight() * (itemsVisible / totalItems));
+        int minimumHeight = (int) (48 * Resources.getSystem().getDisplayMetrics().density);
+        thumb.getLayoutParams().height = suggestedHeight <= minimumHeight ? minimumHeight : suggestedHeight;
         thumb.requestLayout();
     }
 
@@ -90,12 +93,12 @@ public class SimpleFastScroller extends FrameLayout {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 isPressed = true;
-                thumb.setBackgroundColor(getContext().getResources().getColor(thumbActiveColor));
+                thumb.setBackgroundColor(thumbActiveColor);
                 return true;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 isPressed = false;
-                thumb.setBackgroundColor(getContext().getResources().getColor(thumbInactiveColor));
+                thumb.setBackgroundColor(thumbInactiveColor);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float y = event.getY();
